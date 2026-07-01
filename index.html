@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horario de medicamentos — Yuki</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root{
+    --paper: #EFEBE2;
+    --card: #FAF8F3;
+    --ink: #24312B;
+    --ink-soft: #5B6760;
+    --line: #B7AD98;
+    --blue: #3A6B8A;
+    --blue-soft: #DCE7EC;
+    --rose: #B15A4C;
+    --rose-soft: #F1DFDB;
+    --amber: #B5822F;
+    --amber-soft: #F1E4CC;
+    --green: #4F7A5B;
+    --green-soft: #DEE7DF;
+  }
+
+  *{box-sizing:border-box;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:28px 18px 60px;
+  }
+
+  /* Header */
+  .clinic{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    text-align:center;
+    margin-bottom:4px;
+  }
+  h1{
+    font-family:'Fredoka',sans-serif;
+    font-weight:700;
+    font-size:32px;
+    text-align:center;
+    margin:2px 0 4px;
+    letter-spacing:-.01em;
+  }
+  .subtitle{
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:14px;
+    margin-bottom:20px;
+  }
+
+  .petcard{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:14px 18px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 16px;
+    font-size:13.5px;
+    margin-bottom:30px;
+  }
+  .petcard div span.label{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--ink-soft);
+  }
+
+  /* Legend */
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+    margin-bottom:34px;
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    font-weight:500;
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:5px 10px 5px 8px;
+    border-radius:999px;
+  }
+  .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .dot.blue{background:var(--blue);}
+  .dot.rose{background:var(--rose);}
+  .dot.amber{background:var(--amber);}
+  .dot.green{background:var(--green);}
+
+  /* Timeline */
+  .timeline{
+    position:relative;
+    padding-left:54px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:20px;
+    top:6px;
+    bottom:6px;
+    width:2px;
+    background-image:linear-gradient(var(--line) 60%, transparent 0%);
+    background-size:2px 10px;
+    background-repeat:repeat-y;
+  }
+
+  .stop{
+    position:relative;
+    margin-bottom:16px;
+    opacity:0;
+    animation:rise .5s ease forwards;
+  }
+  .stop:nth-child(1){animation-delay:.02s}
+  .stop:nth-child(2){animation-delay:.06s}
+  .stop:nth-child(3){animation-delay:.10s}
+  .stop:nth-child(4){animation-delay:.14s}
+  .stop:nth-child(5){animation-delay:.18s}
+  .stop:nth-child(6){animation-delay:.22s}
+  .stop:nth-child(7){animation-delay:.26s}
+  .stop:nth-child(8){animation-delay:.30s}
+  .stop:nth-child(9){animation-delay:.34s}
+  .stop:nth-child(10){animation-delay:.38s}
+  .stop:nth-child(11){animation-delay:.42s}
+  @keyframes rise{
+    from{opacity:0; transform:translateY(6px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .paw{
+    position:absolute;
+    left:-40px;
+    top:14px;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:var(--card);
+    border:2px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:12px 14px 13px;
+    border-left:5px solid var(--cat, var(--blue));
+  }
+  .card.blue{--cat:var(--blue);}
+  .card.rose{--cat:var(--rose);}
+  .card.amber{--cat:var(--amber);}
+  .card.green{--cat:var(--green);}
+
+  .card-top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:3px;
+  }
+  .time{
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:600;
+    font-size:14px;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .med-name{
+    font-family:'Fredoka',sans-serif;
+    font-weight:600;
+    font-size:16px;
+    flex:1;
+  }
+  .dose{
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.4;
+  }
+  .tag{
+    display:inline-block;
+    margin-top:6px;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    padding:2px 8px;
+    border-radius:999px;
+  }
+  .tag.blue{background:var(--blue-soft); color:var(--blue);}
+  .tag.rose{background:var(--rose-soft); color:var(--rose);}
+  .tag.amber{background:var(--amber-soft); color:var(--amber);}
+  .tag.green{background:var(--green-soft); color:var(--green);}
+
+  .warn{
+    display:inline-block;
+    margin-top:6px;
+    margin-left:6px;
+    font-size:10.5px;
+    font-weight:600;
+    color:#8a3b2f;
+  }
+
+  /* Notes */
+  .notes{
+    margin-top:36px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px 18px;
+  }
+  .notes h2{
+    font-family:'Fredoka',sans-serif;
+    font-size:16px;
+    margin:0 0 8px;
+  }
+  .notes p, .notes li{
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+  .notes ul{margin:6px 0 0; padding-left:18px;}
+  .notes.alert{
+    border-color:#c98671;
+    background:var(--rose-soft);
+  }
+  .notes.alert h2{color:#8a3b2f;}
+  .notes.alert p{color:#6b3226;}
+
+  .status-bar{
+    text-align:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 14px;
+    max-width:fit-content;
+    margin:0 auto 22px;
+  }
+  .status-bar strong{color:var(--ink);}
+
+  .badge-now, .badge-next{
+    display:inline-block;
+    margin-left:6px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;
+    font-weight:700;
+    letter-spacing:.04em;
+    padding:2px 7px;
+    border-radius:999px;
+    vertical-align:middle;
+    animation:pulse 2s ease-in-out infinite;
+  }
+  .badge-now{background:#2f7a4f;color:#fff;}
+  .badge-next{background:var(--ink);color:#fff; animation:none;}
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:.55;}
+  }
+
+  .stop.is-current .card{
+    border-left-width:8px;
+    box-shadow:0 0 0 2px var(--cat, var(--blue)), 0 6px 16px rgba(0,0,0,.14);
+  }
+  .stop.is-current .paw{
+    border-color:var(--cat, var(--blue));
+    background:var(--card);
+    box-shadow:0 0 0 3px var(--cat, var(--blue));
+  }
+  .stop.is-next .card{
+    box-shadow:0 0 0 2px var(--line);
+  }
+
+  .footer{
+    text-align:center;
+    margin-top:26px;
+    font-size:11px;
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono',monospace;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="clinic">Hospital Veterinario Muno · Queretaro</div>
+  <h1>Horario de Yuki 🐾</h1>
+  <div class="subtitle">Receta del 30 de junio 2026 · MVZ Jessica Yoselin Lara Breña</div>
+
+  <div id="status-bar" class="status-bar">Cargando hora del dispositivo…</div>
+
+  <div class="petcard">
+    <div><span class="label">Paciente</span>Yuki</div>
+    <div><span class="label">Tutor</span>Fernanda Juárez</div>
+    <div><span class="label">Raza</span>Pug, 1.4 años</div>
+    <div><span class="label">Peso</span>7.7 kg</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="dot blue"></span>Protección gástrica</div>
+    <div class="legend-item"><span class="dot rose"></span>Antibiótico</div>
+    <div class="legend-item"><span class="dot amber"></span>Dolor / inflamación</div>
+    <div class="legend-item"><span class="dot green"></span>Cuidado de herida</div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="stop" data-min="420">
+      <div class="paw">🐾</div>
+      <div class="card blue">
+        <div class="card-top"><span class="med-name">Sucralvet</span><span class="time">7:00 AM</span></div>
+        <div class="dose">Gel oral, 2 ml</div>
+        <span class="tag blue">30 min antes de comida</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="450">
+      <div class="paw">🐾</div>
+      <div class="card blue">
+        <div class="card-top"><span class="med-name">Omeprazol 20mg</span><span class="time">7:30 AM</span></div>
+        <div class="dose">½ tableta · durante 7 días</div>
+        <span class="tag blue">30 min antes de comida</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="540">
+      <div class="paw">🐾</div>
+      <div class="card rose">
+        <div class="card-top"><span class="med-name">Clindacin-30</span><span class="time">9:00 AM</span></div>
+        <div class="dose">¼ tableta (clindamicina 330mg) · durante 7 días</div>
+        <span class="tag rose">Antibiótico</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="540">
+      <div class="paw">🐾</div>
+      <div class="card green">
+        <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">9:00 AM</span></div>
+        <div class="dose">Microdacyn o Veteribac, con gasa · solo esponjeo, no tallar</div>
+        <span class="tag green">Cuidado de herida</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="600">
+      <div class="paw">🐾</div>
+      <div class="card amber">
+        <div class="card-top"><span class="med-name">Meloxicam 1mg</span><span class="time">10:00 AM</span></div>
+        <div class="dose">¾ tableta · durante 3 días</div>
+        <span class="tag amber">Dolor / inflamación</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="720">
+      <div class="paw">🐾</div>
+      <div class="card amber">
+        <div class="card-top"><span class="med-name">Gabapentina</span><span class="time">12:00 PM</span></div>
+        <div class="dose">¼ tableta de 400mg — o 1 tableta de 100mg (misma dosis)</div>
+        <span class="tag amber">Dolor</span>
+        <span class="warn">⚠ confirmar días con la vete</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="960">
+      <div class="paw">🐾</div>
+      <div class="card green">
+        <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">4:00 PM</span></div>
+        <div class="dose">Microdacyn o Veteribac, con gasa</div>
+        <span class="tag green">Cuidado de herida</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="1140">
+      <div class="paw">🐾</div>
+      <div class="card blue">
+        <div class="card-top"><span class="med-name">Sucralvet</span><span class="time">7:00 PM</span></div>
+        <div class="dose">Gel oral, 2 ml</div>
+        <span class="tag blue">30 min antes de comida</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="1260">
+      <div class="paw">🐾</div>
+      <div class="card rose">
+        <div class="card-top"><span class="med-name">Clindacin-30</span><span class="time">9:00 PM</span></div>
+        <div class="dose">¼ tableta · durante 7 días</div>
+        <span class="tag rose">Antibiótico</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="1380">
+      <div class="paw">🐾</div>
+      <div class="card green">
+        <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">11:00 PM</span></div>
+        <div class="dose">Microdacyn o Veteribac, con gasa</div>
+        <span class="tag green">Cuidado de herida</span>
+      </div>
+    </div>
+
+    <div class="stop" data-min="1440">
+      <div class="paw">🐾</div>
+      <div class="card amber">
+        <div class="card-top"><span class="med-name">Gabapentina</span><span class="time">12:00 AM</span></div>
+        <div class="dose">¼ tableta de 400mg — o 1 tableta de 100mg</div>
+        <span class="tag amber">Dolor</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="notes alert">
+    <h2>⚠ Verificar con la doctora</h2>
+    <p>Hay dos notas distintas para la gabapentina: "¼ tableta de 400mg cada 12h × 5 días" y, escrito a mano, "100mg, 1 tableta cada 12h × 4 días". La dosis es la misma (100mg), pero la duración difiere. Confirmar cuántos días en total.</p>
+  </div>
+
+  <div class="notes">
+    <h2>Duración aproximada (desde 30 jun)</h2>
+    <ul>
+      <li>Omeprazol y Clindacin-30 → hasta ~6 de julio</li>
+      <li>Meloxicam → 1 al 3 de julio</li>
+      <li>Sucralvet → hasta agotar el tubo</li>
+    </ul>
+  </div>
+
+  <div class="notes">
+    <h2>Recomendaciones generales</h2>
+    <ul>
+      <li>Evitar que se lama la herida; cambiar el body seguido para que no se moje de orina</li>
+      <li>Reportar de inmediato vómito, diarrea o cualquier alteración</li>
+      <li>Revisión en 7 días, previa cita</li>
+    </ul>
+  </div>
+
+  <div class="footer">MVZ Jessica Yoselin Lara Breña · Ced. Prof 14999355 · UAQ</div>
+
+</div><script>
+(function(){
+  function fmtTime(d){
+    return d.toLocaleTimeString('es-MX', {hour:'numeric', minute:'2-digit'});
+  }
+  function minsToLabel(mins){
+    // convierte minutos-del-día (puede ser >1440) a hh:mm am/pm
+    var m = mins % 1440;
+    var h = Math.floor(m/60), mm = m%60;
+    var ampm = h < 12 ? 'AM' : 'PM';
+    var h12 = h % 12; if(h12===0) h12=12;
+    return h12 + ':' + (mm<10?'0':'') + mm + ' ' + ampm;
+  }
+
+  function update(){
+    var now = new Date();
+    var nowMin = now.getHours()*60 + now.getMinutes();
+    // el ciclo del horario empieza a las 7:00am; si son antes de las 7am,
+    // pertenecemos a la cola del ciclo anterior (después del 12:00am)
+    var adjusted = nowMin < 420 ? nowMin + 1440 : nowMin;
+
+    var stops = Array.prototype.slice.call(document.querySelectorAll('.stop'));
+    stops.forEach(function(s){ s.classList.remove('is-current','is-next'); });
+    document.querySelectorAll('.badge-now,.badge-next').forEach(function(b){ b.remove(); });
+
+    var currentEl = null, nextEl = null, wrapped = false;
+    for (var i=0; i<stops.length; i++){
+      var min = parseInt(stops[i].getAttribute('data-min'), 10);
+      if (min <= adjusted) currentEl = stops[i];
+      if (min > adjusted && !nextEl) nextEl = stops[i];
+    }
+    if (!nextEl){
+      // ya pasamos la última dosis del ciclo (12:00am) -> la próxima es la primera de mañana
+      nextEl = stops[0];
+      wrapped = true;
+    }
+
+    if (currentEl){
+      currentEl.classList.add('is-current');
+      var badge1 = document.createElement('span');
+      badge1.className = 'badge-now';
+      badge1.textContent = 'AHORA';
+      currentEl.querySelector('.card-top').appendChild(badge1);
+    }
+    if (nextEl){
+      nextEl.classList.add('is-next');
+      var badge2 = document.createElement('span');
+      badge2.className = 'badge-next';
+      badge2.textContent = wrapped ? 'SIGUIENTE · MAÑANA' : 'SIGUIENTE';
+      nextEl.querySelector('.card-top').appendChild(badge2);
+    }
+
+    var statusBar = document.getElementById('status-bar');
+    var nextMed = nextEl.querySelector('.med-name').textContent;
+    var nextTimeMin = parseInt(nextEl.getAttribute('data-min'),10) + (wrapped ? 1440 : 0);
+    var diff = nextTimeMin - adjusted;
+    var hrs = Math.floor(diff/60), mins2 = diff%60;
+    var faltaTxt = hrs>0 ? (hrs+'h '+mins2+'min') : (mins2+'min');
+    statusBar.innerHTML = 'Son las <strong>' + fmtTime(now) + '</strong> · próxima: <strong>' + nextMed + '</strong> en ' + faltaTxt;
+
+    if (currentEl){
+      setTimeout(function(){
+        currentEl.scrollIntoView({behavior:'smooth', block:'center'});
+      }, 300);
+    }
+  }
+
+  update();
+  setInterval(update, 60000); // refresca cada minuto
+})();
+</script>
+</body>
+
+</html>
