@@ -105,6 +105,23 @@
     border:1px solid var(--line);
     padding:5px 10px 5px 8px;
     border-radius:999px;
+    cursor:pointer;
+    user-select:none;
+    transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+  }
+  .legend-item:active{transform:scale(.96);}
+  .legend-item.active{
+    box-shadow:0 0 0 2px var(--chip-color, var(--ink));
+    font-weight:600;
+  }
+  .legend-item[data-filter="blue"].active{--chip-color:var(--blue);}
+  .legend-item[data-filter="rose"].active{--chip-color:var(--rose);}
+  .legend-item[data-filter="amber"].active{--chip-color:var(--amber);}
+  .legend-item[data-filter="green"].active{--chip-color:var(--green);}
+  .legend.filtering .legend-item:not(.active){opacity:.45;}
+
+  .stop.is-hidden{
+    display:none;
   }
   .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
   .dot.blue{background:var(--blue);}
@@ -325,10 +342,10 @@
   </div>
 
   <div class="legend">
-    <div class="legend-item"><span class="dot blue"></span>Protección gástrica</div>
-    <div class="legend-item"><span class="dot rose"></span>Antibiótico</div>
-    <div class="legend-item"><span class="dot amber"></span>Dolor / inflamación</div>
-    <div class="legend-item"><span class="dot green"></span>Cuidado de herida</div>
+    <div class="legend-item" data-filter="blue"><span class="dot blue"></span>Protección gástrica</div>
+    <div class="legend-item" data-filter="rose"><span class="dot rose"></span>Antibiótico</div>
+    <div class="legend-item" data-filter="amber"><span class="dot amber"></span>Dolor / inflamación</div>
+    <div class="legend-item" data-filter="green"><span class="dot green"></span>Cuidado de herida</div>
   </div>
 
   <div class="timeline">
@@ -529,6 +546,43 @@
 
   update();
   setInterval(update, 60000); // refresca cada minuto
+
+  // --- Filtros de la leyenda ---
+  var legend = document.querySelector('.legend');
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.legend-item'));
+  var stopsAll = Array.prototype.slice.call(document.querySelectorAll('.stop'));
+
+  function stopCategory(stop){
+    var card = stop.querySelector('.card');
+    var m = card.className.match(/\b(blue|rose|amber|green)\b/);
+    return m ? m[1] : null;
+  }
+
+  function applyFilters(){
+    var activeChips = chips.filter(function(c){ return c.classList.contains('active'); });
+    if (activeChips.length === 0){
+      legend.classList.remove('filtering');
+      stopsAll.forEach(function(s){ s.classList.remove('is-hidden'); });
+      return;
+    }
+    legend.classList.add('filtering');
+    var activeCats = activeChips.map(function(c){ return c.getAttribute('data-filter'); });
+    stopsAll.forEach(function(s){
+      var cat = stopCategory(s);
+      if (activeCats.indexOf(cat) !== -1){
+        s.classList.remove('is-hidden');
+      } else {
+        s.classList.add('is-hidden');
+      }
+    });
+  }
+
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chip.classList.toggle('active');
+      applyFilters();
+    });
+  });
 })();
 </script>
 </body>
