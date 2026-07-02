@@ -120,6 +120,41 @@
   .legend-item[data-filter="green"].active{--chip-color:var(--green);}
   .legend.filtering .legend-item:not(.active){opacity:.45;}
 
+  .stop.is-past .card{
+    opacity:.45;
+    cursor:pointer;
+  }
+  .stop.is-past .paw{
+    opacity:.55;
+  }
+  .card-details{
+    overflow:hidden;
+    max-height:100px;
+    transition:max-height .25s ease, opacity .2s ease, margin .25s ease;
+  }
+  .stop.is-past .card-details{
+    max-height:0;
+    opacity:0;
+  }
+  .stop.is-past.expanded .card{
+    opacity:.75;
+  }
+  .stop.is-past.expanded .card-details{
+    max-height:200px;
+    opacity:1;
+  }
+  .collapse-hint{
+    display:none;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .stop.is-past .collapse-hint{
+    display:inline-block;
+  }
+
   .stop.is-hidden{
     display:none;
   }
@@ -353,100 +388,122 @@
     <div class="stop" data-min="420">
       <div class="paw">🐾</div>
       <div class="card blue">
-        <div class="card-top"><span class="med-name">Sucralvet</span><span class="time">7:00 AM</span></div>
+        <div class="card-top"><span class="med-name">Sucralvet</span><span class="time">7:00 AM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">Gel oral, 2 ml</div>
         <span class="tag blue">30 min antes de comida</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="450">
       <div class="paw">🐾</div>
       <div class="card blue">
-        <div class="card-top"><span class="med-name">Omeprazol 20mg</span><span class="time">7:30 AM</span></div>
+        <div class="card-top"><span class="med-name">Omeprazol 20mg</span><span class="time">7:30 AM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">½ tableta · durante 7 días</div>
         <span class="tag blue">30 min antes de comida</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="540">
       <div class="paw">🐾</div>
       <div class="card rose">
-        <div class="card-top"><span class="med-name">Clindacin-30</span><span class="time">9:00 AM</span></div>
+        <div class="card-top"><span class="med-name">Clindacin-30</span><span class="time">9:00 AM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">¼ tableta (clindamicina 330mg) · durante 7 días</div>
         <span class="tag rose">Antibiótico</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="540">
       <div class="paw">🐾</div>
       <div class="card green">
-        <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">9:00 AM</span></div>
+        <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">9:00 AM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">Microdacyn o Veteribac, con gasa · solo esponjeo, no tallar</div>
         <span class="tag green">Cuidado de herida</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="600">
       <div class="paw">🐾</div>
       <div class="card amber">
-        <div class="card-top"><span class="med-name">Meloxicam 1mg</span><span class="time">10:00 AM</span></div>
+        <div class="card-top"><span class="med-name">Meloxicam 1mg</span><span class="time">10:00 AM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">¾ tableta · durante 3 días</div>
         <span class="tag amber">Dolor / inflamación</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="720">
       <div class="paw">🐾</div>
       <div class="card amber">
-        <div class="card-top"><span class="med-name">Gabapentina</span><span class="time">12:00 PM</span></div>
+        <div class="card-top"><span class="med-name">Gabapentina</span><span class="time">12:00 PM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">¼ tableta de 400mg — o 1 tableta de 100mg (misma dosis)</div>
         <span class="tag amber">Dolor</span>
         <span class="warn">⚠ confirmar días con la vete</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="960">
       <div class="paw">🐾</div>
       <div class="card green">
-        <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">4:00 PM</span></div>
+        <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">4:00 PM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">Microdacyn o Veteribac, con gasa</div>
         <span class="tag green">Cuidado de herida</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="1140">
       <div class="paw">🐾</div>
       <div class="card blue">
-        <div class="card-top"><span class="med-name">Sucralvet</span><span class="time">7:00 PM</span></div>
+        <div class="card-top"><span class="med-name">Sucralvet</span><span class="time">7:00 PM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">Gel oral, 2 ml</div>
         <span class="tag blue">30 min antes de comida</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="1260">
       <div class="paw">🐾</div>
       <div class="card rose">
-        <div class="card-top"><span class="med-name">Clindacin-30</span><span class="time">9:00 PM</span></div>
+        <div class="card-top"><span class="med-name">Clindacin-30</span><span class="time">9:00 PM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">¼ tableta · durante 7 días</div>
         <span class="tag rose">Antibiótico</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="1380">
       <div class="paw">🐾</div>
       <div class="card green">
-        <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">11:00 PM</span></div>
+        <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">11:00 PM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">Microdacyn o Veteribac, con gasa</div>
         <span class="tag green">Cuidado de herida</span>
+        </div>
       </div>
     </div>
 
     <div class="stop" data-min="1440">
       <div class="paw">🐾</div>
       <div class="card amber">
-        <div class="card-top"><span class="med-name">Gabapentina</span><span class="time">12:00 AM</span></div>
+        <div class="card-top"><span class="med-name">Gabapentina</span><span class="time">12:00 AM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
         <div class="dose">¼ tableta de 400mg — o 1 tableta de 100mg</div>
         <span class="tag amber">Dolor</span>
+        </div>
       </div>
     </div>
 
@@ -499,7 +556,7 @@
     var adjusted = nowMin < 420 ? nowMin + 1440 : nowMin;
 
     var stops = Array.prototype.slice.call(document.querySelectorAll('.stop'));
-    stops.forEach(function(s){ s.classList.remove('is-current','is-next'); });
+    stops.forEach(function(s){ s.classList.remove('is-current','is-next','is-past'); });
     document.querySelectorAll('.badge-now,.badge-next').forEach(function(b){ b.remove(); });
 
     var currentEl = null, nextEl = null, wrapped = false;
@@ -521,6 +578,13 @@
       badge1.textContent = 'AHORA';
       currentEl.querySelector('.card-top').appendChild(badge1);
     }
+
+    stops.forEach(function(s){
+      var min = parseInt(s.getAttribute('data-min'), 10);
+      if (s !== currentEl && min <= adjusted){
+        s.classList.add('is-past');
+      }
+    });
     if (nextEl){
       nextEl.classList.add('is-next');
       var badge2 = document.createElement('span');
@@ -581,6 +645,15 @@
     chip.addEventListener('click', function(){
       chip.classList.toggle('active');
       applyFilters();
+    });
+  });
+
+  // --- Colapsar/expandir tarjetas pasadas ---
+  stopsAll.forEach(function(stop){
+    stop.querySelector('.card').addEventListener('click', function(){
+      if (stop.classList.contains('is-past')){
+        stop.classList.toggle('expanded');
+      }
     });
   });
 })();
