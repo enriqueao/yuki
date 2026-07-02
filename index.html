@@ -186,7 +186,42 @@
     margin-bottom:16px;
     opacity:0;
     animation:rise .5s ease forwards;
+    touch-action:pan-y;
   }
+  .stop .card{
+    transition:transform .2s ease;
+  }
+  .swipe-check{
+    position:absolute;
+    top:0; bottom:0; right:0;
+    width:70px;
+    background:var(--green);
+    border-radius:0 14px 14px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:20px;
+    opacity:0;
+    z-index:-1;
+  }
+  .stop.is-done .card{
+    opacity:.5 !important;
+  }
+  .stop.is-done .med-name{
+    text-decoration:line-through;
+  }
+  .stop.is-done .paw{
+    background:var(--green);
+    border-color:var(--green);
+  }
+  .stop.is-done .paw::before{
+    content:"✓";
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+  }
+  .stop.is-done .paw span{display:none;}
   .stop:nth-child(1){animation-delay:.02s}
   .stop:nth-child(2){animation-delay:.06s}
   .stop:nth-child(3){animation-delay:.10s}
@@ -385,8 +420,9 @@
 
   <div class="timeline">
 
-    <div class="stop" data-min="420">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="420" data-id="sucralvet-am">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card blue">
         <div class="card-top"><span class="med-name">Sucralvet</span><span class="time">7:00 AM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -396,8 +432,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="450">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="450" data-id="omeprazol">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card blue">
         <div class="card-top"><span class="med-name">Omeprazol 20mg</span><span class="time">7:30 AM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -407,8 +444,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="540">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="540" data-id="clindacin-am">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card rose">
         <div class="card-top"><span class="med-name">Clindacin-30</span><span class="time">9:00 AM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -418,8 +456,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="540">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="540" data-id="limpieza-am">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card green">
         <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">9:00 AM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -429,8 +468,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="600">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="600" data-id="meloxicam">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card amber">
         <div class="card-top"><span class="med-name">Meloxicam 1mg</span><span class="time">10:00 AM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -440,8 +480,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="720">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="720" data-id="gabapentina-md">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card amber">
         <div class="card-top"><span class="med-name">Gabapentina</span><span class="time">12:00 PM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -452,8 +493,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="960">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="960" data-id="limpieza-pm">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card green">
         <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">4:00 PM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -463,8 +505,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="1140">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="1140" data-id="sucralvet-pm">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card blue">
         <div class="card-top"><span class="med-name">Sucralvet</span><span class="time">7:00 PM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -474,8 +517,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="1260">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="1260" data-id="clindacin-pm">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card rose">
         <div class="card-top"><span class="med-name">Clindacin-30</span><span class="time">9:00 PM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -485,8 +529,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="1380">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="1380" data-id="limpieza-noche">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card green">
         <div class="card-top"><span class="med-name">Limpieza de herida</span><span class="time">11:00 PM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -496,8 +541,9 @@
       </div>
     </div>
 
-    <div class="stop" data-min="1440">
-      <div class="paw">🐾</div>
+    <div class="stop" data-min="1440" data-id="gabapentina-medianoche">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
       <div class="card amber">
         <div class="card-top"><span class="med-name">Gabapentina</span><span class="time">12:00 AM</span><span class="collapse-hint">▾ toca</span></div>
         <div class="card-details">
@@ -650,11 +696,107 @@
 
   // --- Colapsar/expandir tarjetas pasadas ---
   stopsAll.forEach(function(stop){
-    stop.querySelector('.card').addEventListener('click', function(){
+    var cardEl = stop.querySelector('.card');
+    cardEl.addEventListener('click', function(){
+      if (cardEl._justSwiped){ cardEl._justSwiped = false; return; }
       if (stop.classList.contains('is-past')){
         stop.classList.toggle('expanded');
       }
     });
+  });
+
+  // --- Marcar como hecho (swipe izquierda) con localStorage ---
+  function todayKey(){
+    var d = new Date();
+    return 'yuki-done-' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+  }
+
+  function loadDone(){
+    try{
+      var raw = localStorage.getItem(todayKey());
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+
+  function saveDone(list){
+    try{ localStorage.setItem(todayKey(), JSON.stringify(list)); }catch(e){}
+  }
+
+  function cleanupOldKeys(){
+    try{
+      var keep = todayKey();
+      Object.keys(localStorage).forEach(function(k){
+        if (k.indexOf('yuki-done-') === 0 && k !== keep) localStorage.removeItem(k);
+      });
+    }catch(e){}
+  }
+  cleanupOldKeys();
+
+  var doneList = loadDone();
+
+  function applyDoneState(){
+    stopsAll.forEach(function(stop){
+      var id = stop.getAttribute('data-id');
+      if (doneList.indexOf(id) !== -1) stop.classList.add('is-done');
+      else stop.classList.remove('is-done');
+    });
+  }
+  applyDoneState();
+
+  function toggleDone(stop){
+    var id = stop.getAttribute('data-id');
+    var idx = doneList.indexOf(id);
+    if (idx === -1){
+      doneList.push(id);
+      stop.classList.add('is-done');
+    } else {
+      doneList.splice(idx, 1);
+      stop.classList.remove('is-done');
+    }
+    saveDone(doneList);
+  }
+
+  stopsAll.forEach(function(stop){
+    var card = stop.querySelector('.card');
+    var startX = 0, startY = 0, deltaX = 0, dragging = false;
+
+    card.addEventListener('touchstart', function(e){
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      deltaX = 0;
+      dragging = true;
+      card.style.transition = 'none';
+    }, {passive:true});
+
+    card.addEventListener('touchmove', function(e){
+      if (!dragging) return;
+      var dx = e.touches[0].clientX - startX;
+      var dy = e.touches[0].clientY - startY;
+      if (Math.abs(dx) < Math.abs(dy)) return; // gesto más vertical, no interferir con scroll
+      deltaX = dx;
+      var clamped = Math.max(deltaX, -90);
+      card.style.transform = 'translateX(' + clamped + 'px)';
+      var swipeCheck = stop.querySelector('.swipe-check');
+      swipeCheck.style.opacity = Math.min(Math.abs(clamped)/70, 1);
+      swipeCheck.style.zIndex = 0;
+    }, {passive:true});
+
+    function endDrag(){
+      if (!dragging) return;
+      dragging = false;
+      card.style.transition = 'transform .2s ease';
+      card.style.transform = 'translateX(0)';
+      var swipeCheck = stop.querySelector('.swipe-check');
+      swipeCheck.style.opacity = 0;
+      setTimeout(function(){ swipeCheck.style.zIndex = -1; }, 200);
+      if (Math.abs(deltaX) > 10){ card._justSwiped = true; }
+      if (deltaX < -55){
+        toggleDone(stop);
+      }
+      deltaX = 0;
+    }
+    card.addEventListener('touchend', endDrag);
+    card.addEventListener('touchcancel', endDrag);
   });
 })();
 </script>
