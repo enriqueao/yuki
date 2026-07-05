@@ -233,6 +233,8 @@
   .stop:nth-child(9){animation-delay:.34s}
   .stop:nth-child(10){animation-delay:.38s}
   .stop:nth-child(11){animation-delay:.42s}
+  .stop:nth-child(12){animation-delay:.46s}
+  .stop:nth-child(13){animation-delay:.50s}
   @keyframes rise{
     from{opacity:0; transform:translateY(6px);}
     to{opacity:1; transform:translateY(0);}
@@ -385,6 +387,14 @@
   .stop.is-next .card{
     box-shadow:0 0 0 2px var(--line);
   }
+  .stop.is-current.is-done .paw{
+    border-color:var(--green);
+    background:var(--green);
+    box-shadow:none;
+  }
+  .stop.is-current.is-done .card{
+    box-shadow:0 0 0 2px var(--green), 0 6px 16px rgba(0,0,0,.14);
+  }
 
   .footer{
     text-align:center;
@@ -400,7 +410,7 @@
 
   <div class="clinic">Hospital Veterinario Muno · Queretaro</div>
   <h1>Horario de Yuki 🐾</h1>
-  <div class="subtitle">Receta del 30 de junio 2026 · MVZ Jessica Yoselin Lara Breña</div>
+  <div class="subtitle">Recetas del 30 jun y 4 jul 2026 · MVZ Jessica Yoselin Lara Breña</div>
 
   <div id="status-bar" class="status-bar">Cargando hora del dispositivo…</div>
 
@@ -480,6 +490,18 @@
       </div>
     </div>
 
+    <div class="stop" data-min="630" data-id="danzen-am">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
+      <div class="card amber">
+        <div class="card-top"><span class="med-name">Danzen (Serratiopeptidasa 5mg)</span><span class="time">10:30 AM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
+        <div class="dose">½ tableta · uso humano · durante 10 días</div>
+        <span class="tag amber">Dolor / inflamación</span>
+        </div>
+      </div>
+    </div>
+
     <div class="stop" data-min="720" data-id="gabapentina-md">
       <div class="paw"><span>🐾</span></div>
       <div class="swipe-check">✓</div>
@@ -529,6 +551,18 @@
       </div>
     </div>
 
+    <div class="stop" data-min="1350" data-id="danzen-pm">
+      <div class="paw"><span>🐾</span></div>
+      <div class="swipe-check">✓</div>
+      <div class="card amber">
+        <div class="card-top"><span class="med-name">Danzen (Serratiopeptidasa 5mg)</span><span class="time">10:30 PM</span><span class="collapse-hint">▾ toca</span></div>
+        <div class="card-details">
+        <div class="dose">½ tableta · uso humano · durante 10 días</div>
+        <span class="tag amber">Dolor / inflamación</span>
+        </div>
+      </div>
+    </div>
+
     <div class="stop" data-min="1380" data-id="limpieza-noche">
       <div class="paw"><span>🐾</span></div>
       <div class="swipe-check">✓</div>
@@ -561,11 +595,12 @@
   </div>
 
   <div class="notes">
-    <h2>Duración aproximada (desde 30 jun)</h2>
+    <h2>Duración aproximada</h2>
     <ul>
-      <li>Omeprazol y Clindacin-30 → hasta ~6 de julio</li>
+      <li>Omeprazol y Clindacin-30 → hasta ~6 de julio (desde 30 jun)</li>
       <li>Meloxicam → 1 al 3 de julio</li>
       <li>Sucralvet → hasta agotar el tubo</li>
+      <li>Danzen → hasta ~14 de julio (desde 4 jul)</li>
     </ul>
   </div>
 
